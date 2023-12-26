@@ -1,7 +1,8 @@
 <%= turbo_frame_tag "cart" do %>
-  <h1>Cart</h1>
+<%# idk why this link_to is funky? cart_path breaks %>
+  <h1><%= link_to "Cart", @cart, data: { turbo_frame: "_top" } %></h1>
   <% if @cart.orderables.count > 0 %>
-    <%= render "cart/orderables" %>
+    <%= render "carts/orderables" %>
     <p>Total: <%= @cart.total %></p>
   <% else %>
     <p>Your cart is empty</p>
