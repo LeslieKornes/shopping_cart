@@ -11,7 +11,15 @@
   </head>
 
   <body>
+    <%= render "layouts/header" %>
+    <div id="flash">
+      <%= render "layouts/flash" %>
+    </div>
     <%= render partial: "carts/cart" if @render_cart %>
-    <%= yield %>
+    <main>
+      <div>
+        <%= yield %>
+      </div>
+    </main>
   </body>
 </html>

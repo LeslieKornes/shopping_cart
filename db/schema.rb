@@ -10,10 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_22_192433) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_29_041602) do
   create_table "carts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
   end
 
   create_table "orderables", force: :cascade do |t|
@@ -34,6 +35,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_22_192433) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string "username"
+    t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "carts", "users", on_delete: :cascade
   add_foreign_key "orderables", "carts"
   add_foreign_key "orderables", "products"
 end

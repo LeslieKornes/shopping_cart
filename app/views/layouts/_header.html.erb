@@ -1,0 +1,29 @@
+<header>
+  <nav class="primary">
+    <ul>
+      <% if signed_in? %>
+        <li>
+          <%= button_to current_user.username, current_user, class: "btn" %>
+        </li>
+        <li>
+          <%= button_to "Sign Out", session_path, method: :delete, class: "btn" %>
+        </li>
+      <% else %>
+        <li>
+          <%= link_to "Sign In", signin_path %>
+        </li>
+        <li>
+          <%= link_to "Sign Up", signup_path %>
+        </li>
+      <% end %>
+    </ul>
+
+    <div class="logo">
+    <%= link_to root_path do %>
+      <h1>Store</h1>
+    <% end %>
+  </div>
+  </nav>
+
+  
+</header>
