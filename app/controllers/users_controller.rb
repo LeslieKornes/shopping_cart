@@ -23,8 +23,7 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       cart = Cart.find(session[:cart_id])
       @user.cart = cart
-      session[:counter] = 0
-      session_count_ticker #maybe don't increment at login? idk who cares rn
+      @user.session_counter.increment
       redirect_to @user
     else
       render :new, status: :unprocessable_entity
@@ -44,7 +43,9 @@ class UsersController < ApplicationController
 
   def destroy
     @user.destroy
-    reset_session #clear all session data and generates new sesh
+    session[:user_id] = nil
+    session[:cart_id] = nil
+    # reset_session #clear all session data and generates new sesh
     confirm_fresh_sesh 
     redirect_to root_url, alert: "Account successfully deleted!"
   end

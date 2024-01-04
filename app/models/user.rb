@@ -13,6 +13,6 @@ class User < ApplicationRecord
 
   has_one :cart, dependent: :destroy
 
-  # our kredis list!
   kredis_list :liked_products
+  kredis_counter :session_counter
 end

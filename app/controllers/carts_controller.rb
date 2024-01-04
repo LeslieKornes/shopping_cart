@@ -2,6 +2,7 @@ class CartsController < ApplicationController
   include CustomSessionBehavior
 
   before_action :require_signin
+  before_action :set_user, only: %i[add remove]
 
   def show
     @render_cart = false
@@ -9,10 +10,10 @@ class CartsController < ApplicationController
   end
   
   def add
-    session_count_ticker
+    # session_count_ticker
     @product = Product.find(params[:id])
-    user = User.find(session[:user_id])
-    user.liked_products << @product.name
+    @user.liked_products << @product.name
+    @user.session_counter.increment
     quantity = params[:quantity].to_i
     current_orderable = @cart.orderables.find_by(product_id: @product.id)
 
@@ -36,7 +37,8 @@ class CartsController < ApplicationController
   end
 
   def remove
-    session_count_ticker
+    # session_count_ticker
+    @user.session_counter.increment
     Orderable.find(params[:id]).destroy
 
     respond_to do |format|
@@ -46,5 +48,11 @@ class CartsController < ApplicationController
                                                     locals: { cart: @cart })
       end
     end
+  end
+
+  private
+  
+  def set_user
+    @user = User.find(session[:user_id])
   end
 end
