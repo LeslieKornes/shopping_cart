@@ -20,7 +20,10 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
+      session = SessionStore.new(request)
       session[:user_id] = @user.id
+      puts "+++++++++++++++++++++++++++++"
+      session.puts_something
       cart = Cart.find(session[:cart_id])
       @user.cart = cart
       @user.session_counter.increment
